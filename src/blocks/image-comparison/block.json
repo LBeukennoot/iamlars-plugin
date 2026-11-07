@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "iamlars-plugin/image-comparison",
+  "version": "1.0.0",
+  "title": "Image Comparison",
+  "category": "media",
+  "icon": "format-image",
+  "attributes": {
+    "imageAId": { "type": "number" },
+    "imageAUrl": { "type": "string" },
+    "imageAAlt": { "type": "string", "default": "" },
+    "imageBId": { "type": "number" },
+    "imageBUrl": { "type": "string" },
+    "imageBAlt": { "type": "string", "default": "" }
+  },
+  "render": "file:./render.php"
+}

@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * Plugin Name: iamlars-plugin
+ * Description: Custom blocks built with Vite and Tailwind v4.
+ * Version: 1.0.0
+ * Author: Lars
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+add_action('init', function () {
+    $dir = plugin_dir_path(__FILE__);
+    $url = plugin_dir_url(__FILE__);
+
+    // 1. Register style
+    if (file_exists($dir . 'dist/blocks.css')) {
+        wp_register_style(
+            'iamlars-blocks-style',
+            $url . 'dist/blocks.css',
+            [],
+            filemtime($dir . 'dist/blocks.css')
+        );
+    }
+
+    // 2. Register script
+    if (file_exists($dir . 'dist/blocks.js')) {
+        wp_register_script(
+            'iamlars-blocks-script',
+            $url . 'dist/blocks.js',
+            ['wp-blocks', 'wp-element', 'wp-block-editor'],
+            filemtime($dir . 'dist/blocks.js'),
+            true
+        );
+    }
+
+    // 3. Register the block metadata
+    register_block_type($dir . 'src/blocks/image-comparison/block.json', [
+        'editor_script' => 'iamlars-blocks-script',
+        'editor_style'  => 'iamlars-blocks-style',
+        'style'         => 'iamlars-blocks-style',
+    ]);
+});
+
+// Explicitly ensure the editor loads your bundled assets
+add_action('enqueue_block_editor_assets', function () {
+    wp_enqueue_script('iamlars-blocks-script');
+    wp_enqueue_style('iamlars-blocks-style');
+});
+
+// Add type="module" so the browser executes the ES output
+add_filter('script_loader_tag', function ($tag, $handle, $src) {
+    if (in_array($handle, ['iamlars-blocks-script', 'iamlars-view-comparison'], true)) {
+        return '<script type="module" src="' . esc_url($src) . '"></script>';
+    }
+    return $tag;
+}, 10, 3);

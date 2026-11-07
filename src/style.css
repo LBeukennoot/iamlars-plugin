@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@import "./theme.css";
+
+/* Point directly to the directory containing your block files */
+@source "./blocks";
