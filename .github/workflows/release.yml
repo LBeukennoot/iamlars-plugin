@@ -28,15 +28,19 @@ jobs:
 
       - name: Bundle Production Plugin ZIP
         run: |
-          mkdir -p package/iamlars-plugin/src
+          # 1. Clean up any previous package folder and build the directory tree
+          rm -rf package
+          mkdir -p package/iamlars-plugin/src/blocks
 
-          # Copy only required runtime files
+          # 2. Copy the contents of src/blocks directly into package/iamlars-plugin/src/blocks/
+          cp -r src/blocks/* package/iamlars-plugin/src/blocks/
+
+          # 3. Copy other required runtime files
           cp -r dist package/iamlars-plugin/
-          cp -r src/blocks package/iamlars-plugin/src/
           cp -r vendor package/iamlars-plugin/
           cp iamlars-plugin.php package/iamlars-plugin/
 
-          # Zip the plugin folder
+          # 4. Zip the plugin folder
           cd package
           zip -r ../iamlars-plugin.zip iamlars-plugin/
           cd ..
