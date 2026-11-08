@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: iamlars
  * Description: Adding custom blocks for a personal portfolio website.
@@ -12,25 +13,33 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// 1. Initialize Plugin Update Checker
-require_once __DIR__ . '/vendor/plugin-update-checker/plugin-update-checker.php';
-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+// 1. Always use absolute paths with __DIR__ to prevent path resolution crashes
+$puc_file = __DIR__ . '/vendor/plugin-update-checker/plugin-update-checker.php';
 
-$myUpdateChecker = PucFactory::buildUpdateChecker(
-    'https://github.com/LBeukennoot/iamlars-plugin', // Replace with your actual GitHub repo URL
-    __FILE__,
-    'iamlars-plugin'
-);
+if (file_exists($puc_file)) {
+    require_once $puc_file;
 
-// Tells PUC to look for release ZIP assets rather than the raw repository source code
-$myUpdateChecker->getVcsApi()->enableReleaseAssets();
+    // 2. Build the update checker
+    $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v6\PucFactory::buildUpdateChecker(
+        'https://github.com/LBeukennoot/iamlars-plugin/',
+        __FILE__,
+        'iamlars-plugin'
+    );
 
-// If your GitHub repository is PRIVATE, generate a personal access token (classic or fine-grained)
-// with 'Contents: Read' permissions and uncomment the line below:
-// $myUpdateChecker->setAuthentication('YOUR_GITHUB_PERSONAL_ACCESS_TOKEN');
+    // Set the stable branch
+    $myUpdateChecker->setBranch('main');
 
-if (!defined('ABSPATH')) {
-    exit;
+    // 3. Type-hint to satisfy the IDE and guard against null VCS API
+    /** @var \YahnisElsts\PluginUpdateChecker\v6\Vcs\GitHubApi|null $vcsApi */
+    $vcsApi = method_exists($myUpdateChecker, 'getVcsApi') ? $myUpdateChecker->getVcsApi() : null;
+
+    if ($vcsApi && method_exists($vcsApi, 'enableReleaseAssets')) {
+        $vcsApi->enableReleaseAssets();
+
+        // 4. Authenticate private repository (Required for private GitHub repos)
+        // Pass your GitHub Personal Access Token (classic) with 'repo' scope
+        // $vcsApi->setAuthentication('YOUR_GITHUB_PERSONAL_ACCESS_TOKEN');
+    }
 }
 
 add_action('init', function () {
