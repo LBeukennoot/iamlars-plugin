@@ -42,6 +42,12 @@ add_action('init', function () {
         'editor_style'  => 'iamlars-blocks-style',
         'style'         => 'iamlars-blocks-style',
     ]);
+    register_block_type($dir . 'src/blocks/carousel-gallery/block.json', [
+        'editor_script' => 'iamlars-blocks-script',
+        'editor_style'  => 'iamlars-blocks-style',
+        'style'         => 'iamlars-blocks-style',
+        'view_script'   => 'iamlars-blocks-script', // <-- REQUIRED for front-end Alpine/JS
+    ]);
 });
 
 // Explicitly ensure the editor loads your bundled assets
@@ -57,3 +63,19 @@ add_filter('script_loader_tag', function ($tag, $handle, $src) {
     }
     return $tag;
 }, 10, 3);
+
+// In iamlars-plugin.php
+add_action('wp_enqueue_scripts', function () {
+    $dir = plugin_dir_path(__FILE__);
+    $url = plugin_dir_url(__FILE__);
+
+    if (file_exists($dir . 'dist/blocks.js')) {
+        wp_enqueue_script(
+            'iamlars-blocks-script',
+            $url . 'dist/blocks.js',
+            [],
+            filemtime($dir . 'dist/blocks.js'),
+            false // Load in <head> or before the theme's main.js
+        );
+    }
+}, 5); // Priority 5 so it executes before standard scripts (priority 10)

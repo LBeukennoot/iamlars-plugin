@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "iamlars/carousel-gallery",
+  "version": "1.0.0",
+  "title": "Carousel Gallery",
+  "category": "media",
+  "icon": "images-alt2",
+  "description": "An interactive carousel gallery with momentum and spring physics.",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "images": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "editorScript": "iamlars-blocks-script",
+  "editorStyle": "iamlars-blocks-style",
+  "style": "iamlars-blocks-style",
+  "render": "file:./render.php"
+}
