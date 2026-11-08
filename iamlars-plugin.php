@@ -1,11 +1,31 @@
 <?php
-
 /**
  * Plugin Name: iamlars-plugin
  * Description: Custom blocks built with Vite and Tailwind v4.
  * Version: 1.0.0
- * Author: Lars
+ * Author: LBeukennoot
  */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// 1. Initialize Plugin Update Checker
+require_once __DIR__ . '/vendor/plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://github.com/your-username/iamlars-plugin/', // Replace with your actual GitHub repo URL
+    __FILE__,
+    'iamlars-plugin'
+);
+
+// Tells PUC to look for release ZIP assets rather than the raw repository source code
+$myUpdateChecker->getVcsApi()->enableReleaseAssets();
+
+// If your GitHub repository is PRIVATE, generate a personal access token (classic or fine-grained)
+// with 'Contents: Read' permissions and uncomment the line below:
+// $myUpdateChecker->setAuthentication('YOUR_GITHUB_PERSONAL_ACCESS_TOKEN');
 
 if (!defined('ABSPATH')) {
     exit;

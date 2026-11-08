@@ -1,0 +1,51 @@
+name: Build and Create Release Asset
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Matches v1.0.0, v1.0.1, v1.2.0, etc.
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Grants permission to attach files to GitHub Releases
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies & Compile Assets
+        run: |
+          npm ci
+          npm run build
+
+      - name: Bundle Production Plugin ZIP
+        run: |
+          # Create a clean folder matching the plugin slug
+          mkdir -p package/iamlars-plugin
+
+          # Copy only required runtime files
+          cp -r dist package/iamlars-plugin/
+          cp -r src/blocks package/iamlars-plugin/src/
+          cp -r vendor package/iamlars-plugin/
+          cp iamlars-plugin.php package/iamlars-plugin/
+
+          # Zip the plugin folder (WordPress expects root folder inside zip)
+          cd package
+          zip -r ../iamlars-plugin.zip iamlars-plugin/
+          cd ..
+
+      - name: Create GitHub Release with Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: iamlars-plugin.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
