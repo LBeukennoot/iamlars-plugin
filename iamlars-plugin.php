@@ -15,7 +15,7 @@ require_once __DIR__ . '/vendor/plugin-update-checker/plugin-update-checker.php'
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 $myUpdateChecker = PucFactory::buildUpdateChecker(
-    'https://github.com/your-username/iamlars-plugin/', // Replace with your actual GitHub repo URL
+    'https://github.com/LBeukennoot/iamlars-plugin', // Replace with your actual GitHub repo URL
     __FILE__,
     'iamlars-plugin'
 );
