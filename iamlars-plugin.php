@@ -95,7 +95,6 @@ add_filter('script_loader_tag', function ($tag, $handle, $src) {
     return $tag;
 }, 10, 3);
 
-// In iamlars-plugin.php
 add_action('wp_enqueue_scripts', function () {
     $dir = plugin_dir_path(__FILE__);
     $url = plugin_dir_url(__FILE__);
@@ -106,7 +105,7 @@ add_action('wp_enqueue_scripts', function () {
             $url . 'dist/blocks.js',
             [],
             filemtime($dir . 'dist/blocks.js'),
-            false // Load in <head> or before the theme's main.js
+            true
         );
     }
-}, 5); // Priority 5 so it executes before standard scripts (priority 10)
+});

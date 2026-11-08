@@ -24,7 +24,7 @@ export default function Edit({ attributes, setAttributes }) {
     <div {...blockProps}>
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="font-bold text-slate-800 text-base">Carousel Gallery</h3>
+          <h3 className="font-bold text-slate-800 text-base font-display">Carousel Gallery</h3>
           <p className="text-xs text-slate-500">
             {images.length} {images.length === 1 ? 'image' : 'images'} selected
           </p>

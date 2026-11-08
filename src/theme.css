@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Corben';
-  src: url('assets/fonts/Corben-Regular.ttf');
+  src: url('./assets/fonts/Corben-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Lexend';
-  src: url('assets/fonts/Lexend-VariableFont_wght.ttf');
+  src: url('./assets/fonts/Lexend-VariableFont_wght.ttf');
 }
 
 @theme {

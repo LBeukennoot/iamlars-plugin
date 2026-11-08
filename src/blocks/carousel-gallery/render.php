@@ -37,7 +37,7 @@ $wrapper = get_block_wrapper_attributes([
       :style="`transform: translate3d(${offset}px, 0px, 0px);`">
       <?php foreach ($images as $index => $image) : ?>
         <div
-          class="shrink-0 h-72 sm:h-80 md:h-96 w-full rounded-2xl overflow-hidden bg-transparent">
+          class="shrink-0 h-72 sm:h-80 md:h-96 w-full flex justify-center rounded-2xl overflow-hidden bg-transparent">
           <img
             src="<?php echo esc_url($image['url'] ?? ''); ?>"
             alt="<?php echo esc_attr($image['alt'] ?? ''); ?>"

@@ -4,8 +4,16 @@ import Alpine from 'alpinejs';
 import './js/carouselGallery.js';
 
 // Attach Alpine to window if not already present
-if (!window.Alpine) {
-  window.Alpine = Alpine;
+window.Alpine = window.Alpine || Alpine;
+
+// Register component
+window.Alpine.data('carouselGallery', carouselGallery);
+window.carouselGallery = carouselGallery;
+
+// Start Alpine if it hasn't already been started
+if (!window.Alpine.version || !window.__alpineStarted) {
+  window.__alpineStarted = true;
+  window.Alpine.start();
 }
 
 // Block registrations for Gutenberg editor
