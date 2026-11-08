@@ -3,7 +3,7 @@
 /**
  * Plugin Name: iamlars
  * Description: Adding custom blocks for a personal portfolio website.
- * Version:     1.0.5
+ * Version:     1.0.6
  * Author URI:  https://iamlars.nl/
  * Author:      LBeukennoot
  * Text Domain: iamlars-plugin
