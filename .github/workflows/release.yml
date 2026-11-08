@@ -18,12 +18,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'yarn' # Automatically caches Yarn cache based on yarn.lock
+          node-version: 22 # Updated from 20 to satisfy Node >= 22.13.0
+          cache: 'yarn'
 
       - name: Install dependencies & Compile Assets
         run: |
-          yarn install --frozen-lockfile
+          yarn install --frozen-lockfile --ignore-engines
           yarn build
 
       - name: Bundle Production Plugin ZIP
