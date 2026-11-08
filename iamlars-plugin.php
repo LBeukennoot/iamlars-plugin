@@ -1,9 +1,11 @@
 <?php
 /**
- * Plugin Name: iamlars-plugin
- * Description: Custom blocks built with Vite and Tailwind v4.
- * Version: 1.0.0
- * Author: LBeukennoot
+ * Plugin Name: iamlars
+ * Description: Adding custom blocks for a personal portfolio website.
+ * Version:     1.0.3
+ * Author URI:  https://iamlars.nl/
+ * Author:      LBeukennoot
+ * Text Domain: iamlars-plugin
  */
 
 if (!defined('ABSPATH')) {
