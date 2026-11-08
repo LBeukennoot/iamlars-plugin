@@ -28,11 +28,11 @@ jobs:
 
       - name: Bundle Production Plugin ZIP
         run: |
-          mkdir -p package/iamlars-plugin
+          mkdir -p package/iamlars-plugin/src
 
           # Copy only required runtime files
           cp -r dist package/iamlars-plugin/
-          cp -r src/blocks package/iamlars-plugin/src/blocks
+          cp -r src/blocks package/iamlars-plugin/src/
           cp -r vendor package/iamlars-plugin/
           cp iamlars-plugin.php package/iamlars-plugin/
 
