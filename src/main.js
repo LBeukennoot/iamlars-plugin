@@ -3,18 +3,18 @@ import './style.css';
 import Alpine from 'alpinejs';
 import './js/carouselGallery.js';
 
-// Attach Alpine to window if not already present
 window.Alpine = window.Alpine || Alpine;
 
 // Register component
 window.Alpine.data('carouselGallery', carouselGallery);
 window.carouselGallery = carouselGallery;
 
-// Start Alpine if it hasn't already been started
-if (!window.Alpine.version || !window.__alpineStarted) {
-  window.__alpineStarted = true;
-  window.Alpine.start();
-}
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.__alpineStarted) {
+    window.__alpineStarted = true;
+    window.Alpine.start();
+  }
+});
 
 // Block registrations for Gutenberg editor
 import './blocks/image-comparison';
