@@ -49,7 +49,7 @@ function ImageSlot({
 
       {/* Inline Editable Tag Pill */}
       <div
-        className={`absolute top-3 ${
+        className={`absolute bottom-3 ${
           tagPosition === 'left' ? 'left-3' : 'right-3'
         } z-10`}
       >
@@ -59,7 +59,7 @@ function ImageSlot({
           onChange={onChangeTag}
           placeholder="Add tag..."
           allowedFormats={[]}
-          className="inline-block px-3 py-1 bg-white/90 backdrop-blur-xs text-slate-900 text-xs font-medium rounded-full shadow-sm min-w-12 text-center focus:outline-none focus:ring-2 focus:ring-primary"
+          className="inline-block px-2 pb-0.5 bg-white text-secondary text-sm font-display font-medium rounded-full shadow-sm"
         />
       </div>
 

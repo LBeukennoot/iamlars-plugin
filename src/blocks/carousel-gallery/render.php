@@ -27,7 +27,7 @@ $wrapper = get_block_wrapper_attributes([
   @touchstart="onTouchStart($event)"
   @touchmove.window="isDragging && onTouchMove($event)"
   @touchend.window="isDragging && onDragEnd()">
-<!-- Linear Horizontal Viewport -->
+  <!-- Linear Horizontal Viewport -->
   <div
     class="w-full overflow-hidden"
     :class="isDragging ? 'cursor-grabbing' : 'cursor-grab'">
@@ -37,12 +37,18 @@ $wrapper = get_block_wrapper_attributes([
       :style="`transform: translate3d(${offset}px, 0px, 0px);`">
       <?php foreach ($images as $index => $image) : ?>
         <div
-          class="shrink-0 h-72 sm:h-80 md:h-96 w-full flex justify-center rounded-2xl overflow-hidden bg-transparent">
+          class="relative shrink-0 h-72 sm:h-80 md:h-96 w-full flex justify-center rounded-2xl overflow-hidden bg-transparent">
           <img
             src="<?php echo esc_url($image['url'] ?? ''); ?>"
             alt="<?php echo esc_attr($image['alt'] ?? ''); ?>"
             class="h-full w-auto max-w-none object-contain pointer-events-none rounded-2xl"
             loading="lazy" />
+
+          <?php if (!empty($image['tag'])) : ?>
+            <span class="absolute bottom-3 left-3 z-10 px-2 pb-0.5 bg-white text-secondary text-sm font-display font-medium rounded-full shadow-sm pointer-events-none">
+              <?php echo esc_html($image['tag']); ?>
+            </span>
+          <?php endif; ?>
         </div>
       <?php endforeach; ?>
     </div>
