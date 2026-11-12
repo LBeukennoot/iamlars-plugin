@@ -45,7 +45,7 @@ $wrapper = get_block_wrapper_attributes([
             loading="lazy" />
 
           <?php if (!empty($image['tag'])) : ?>
-            <span class="absolute bottom-3 left-3 z-10 px-2 pb-0.5 bg-white text-secondary text-sm font-display font-medium rounded-full shadow-sm pointer-events-none">
+            <span class="absolute bottom-3 left-3 z-10 pointer-events-none tag bg-white text-secondary shadow-md!">
               <?php echo esc_html($image['tag']); ?>
             </span>
           <?php endif; ?>

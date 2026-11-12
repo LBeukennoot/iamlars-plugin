@@ -59,7 +59,7 @@ function ImageSlot({
           onChange={onChangeTag}
           placeholder="Add tag..."
           allowedFormats={[]}
-          className="inline-block px-2 pb-0.5 bg-white text-secondary text-sm font-display font-medium rounded-full shadow-sm"
+          className="tag bg-white text-secondary shadow-md"
         />
       </div>
 

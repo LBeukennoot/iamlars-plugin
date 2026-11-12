@@ -134,7 +134,7 @@ export default function Edit({ attributes, setAttributes }) {
                     onChange={(val) => updateImageTag(index, val)}
                     placeholder="Add tag..."
                     allowedFormats={[]}
-                    className="inline-block px-2 pb-0.5 bg-white text-secondary text-sm font-display font-medium rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="tag bg-white text-secondary shadow-md"
                   />
                 </div>
 

@@ -39,7 +39,7 @@ $wrapper = get_block_wrapper_attributes([
     alt="<?php echo esc_attr($image_b_alt); ?>"
     class="absolute inset-0 w-full h-full object-cover pointer-events-none" />
   <?php if (!empty($image_b_tag)) : ?>
-    <span class="absolute bottom-3 right-3 z-0 px-2 pb-0.5 bg-white text-secondary text-sm font-display font-medium rounded-full shadow-sm pointer-events-none">
+    <span class="absolute bottom-3 right-3 z-0 pointer-events-none tag bg-white text-secondary shadow-md">
       <?php echo esc_html($image_b_tag); ?>
     </span>
   <?php endif; ?>
@@ -54,7 +54,7 @@ $wrapper = get_block_wrapper_attributes([
       class="absolute inset-0 w-full h-full object-cover" />
 
     <?php if (!empty($image_a_tag)) : ?>
-      <span class="absolute bottom-3 left-3 z-10 px-2 pb-0.5 bg-white text-secondary text-sm font-display font-medium rounded-full shadow-sm pointer-events-none">
+      <span class="absolute bottom-3 left-3 z-10 pointer-events-none tag bg-white text-secondary shadow-md">
         <?php echo esc_html($image_a_tag); ?>
       </span>
     <?php endif; ?>
