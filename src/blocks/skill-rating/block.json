@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "iamlars/skill-rating",
+  "title": "Skill Rating",
+  "category": "widgets",
+  "icon": "star-filled",
+  "description": "Display a single skill with a 1–5 proficiency score.",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "skill": {
+      "type": "string",
+      "default": ""
+    },
+    "rating": {
+      "type": "number",
+      "default": 4
+    }
+  },
+  "render": "file:./render.php"
+}

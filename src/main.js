@@ -19,3 +19,4 @@ document.addEventListener('DOMContentLoaded', () => {
 // Block registrations for Gutenberg editor
 import './blocks/image-comparison';
 import './blocks/carousel-gallery';
+import './blocks/skill-rating';

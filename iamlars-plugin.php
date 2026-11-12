@@ -77,7 +77,12 @@ add_action('init', function () {
         'editor_script' => 'iamlars-blocks-script',
         'editor_style'  => 'iamlars-blocks-style',
         'style'         => 'iamlars-blocks-style',
-        'view_script'   => 'iamlars-blocks-script', // <-- REQUIRED for front-end Alpine/JS
+        'view_script'   => 'iamlars-blocks-script', // <- when using alpine in the block
+    ]);
+    register_block_type($dir . 'src/blocks/skill-rating/block.json', [
+        'editor_script' => 'iamlars-blocks-script',
+        'editor_style'  => 'iamlars-blocks-style',
+        'style'         => 'iamlars-blocks-style',
     ]);
 });
 
