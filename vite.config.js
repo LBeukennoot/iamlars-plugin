@@ -4,13 +4,11 @@ import path from 'path';
 
 export default defineConfig({
   base: './',
-  plugins: [
-    tailwindcss(),
-  ],
+  plugins: [tailwindcss()],
   esbuild: {
     jsx: 'transform',
     jsxFactory: 'wp.element.createElement',
-    jsxFragment: 'wp.element.Fragment',
+    jsxFragment: 'wp.element.Fragment'
   },
   build: {
     outDir: 'dist',
@@ -34,13 +32,10 @@ export default defineConfig({
           '@wordpress/blocks': 'wp.blocks',
           '@wordpress/block-editor': 'wp.blockEditor',
           '@wordpress/element': 'wp.element',
-        },
+          '@wordpress/components': 'wp.components'
+        }
       },
-      external: [
-        '@wordpress/blocks',
-        '@wordpress/block-editor',
-        '@wordpress/element',
-      ],
-    },
-  },
+      external: ['@wordpress/blocks', '@wordpress/block-editor', '@wordpress/element', '@wordpress/components']
+    }
+  }
 });

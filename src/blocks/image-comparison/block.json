@@ -7,12 +7,36 @@
   "category": "media",
   "icon": "format-image",
   "attributes": {
-    "imageAId": { "type": "number" },
-    "imageAUrl": { "type": "string" },
-    "imageAAlt": { "type": "string", "default": "" },
-    "imageBId": { "type": "number" },
-    "imageBUrl": { "type": "string" },
-    "imageBAlt": { "type": "string", "default": "" }
+    "imageAId": {
+      "type": "number"
+    },
+    "imageAUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageAAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "imageATag": {
+      "type": "string",
+      "default": ""
+    },
+    "imageBId": {
+      "type": "number"
+    },
+    "imageBUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageBAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "imageBTag": {
+      "type": "string",
+      "default": ""
+    }
   },
   "render": "file:./render.php"
 }
