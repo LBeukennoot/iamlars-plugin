@@ -11,7 +11,7 @@ export default function Edit({ attributes, setAttributes }) {
   const { images = [] } = attributes;
 
   const blockProps = useBlockProps({
-    className: 'p-6 bg-slate-50 border border-slate-200 rounded-3xl'
+    className: 'p-6 bg-slate-50 border border-slate-200 rounded-3xl w-full'
   });
 
   const handleSelectImages = (selectedMedia) => {
@@ -83,7 +83,7 @@ export default function Edit({ attributes, setAttributes }) {
                 <button
                   type="button"
                   onClick={open}
-                  className="px-4 py-2 bg-primary text-white text-xs font-semibold font-sans! rounded-full shadow hover:opacity-90 cursor-pointer"
+                  className="px-4 py-2 bg-primary text-white button mr-0!"
                 >
                   {images.length > 0 ? 'Edit Gallery' : 'Add Images'}
                 </button>
@@ -105,7 +105,7 @@ export default function Edit({ attributes, setAttributes }) {
                   <button
                     type="button"
                     onClick={open}
-                    className="px-4 py-2 bg-primary text-white text-xs font-medium rounded-full cursor-pointer"
+                    className="px-4 py-2 bg-primary text-white text-xs font-medium rounded-full clickable"
                   >
                     Select Images
                   </button>
@@ -134,7 +134,7 @@ export default function Edit({ attributes, setAttributes }) {
                     onChange={(val) => updateImageTag(index, val)}
                     placeholder="Add tag..."
                     allowedFormats={[]}
-                    className="tag bg-white text-secondary shadow-md"
+                    className="pill-tag bg-white text-secondary shadow-md"
                   />
                 </div>
 
@@ -142,7 +142,7 @@ export default function Edit({ attributes, setAttributes }) {
                 <button
                   type="button"
                   onClick={() => removeImage(index)}
-                  className="absolute top-2 right-2 w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shadow"
+                  className="absolute top-2 right-2 w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity clickable shadow"
                   aria-label="Remove image"
                 >
                   &times;

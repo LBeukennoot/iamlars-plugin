@@ -28,7 +28,7 @@ function ImageSlot({
               <button
                 type="button"
                 onClick={open}
-                className="bg-primary text-white text-xs md:text-sm font-medium px-4 py-2 rounded-full cursor-pointer shadow hover:opacity-90 transition-opacity whitespace-nowrap"
+                className="bg-primary text-white text-xs md:text-sm font-medium px-4 py-2 rounded-full clickable shadow hover:opacity-90 transition-opacity whitespace-nowrap"
               >
                 Select {label}
               </button>
@@ -59,7 +59,7 @@ function ImageSlot({
           onChange={onChangeTag}
           placeholder="Add tag..."
           allowedFormats={[]}
-          className="tag bg-white text-secondary shadow-md"
+          className="pill-tag bg-white text-secondary shadow-md"
         />
       </div>
 
@@ -73,7 +73,7 @@ function ImageSlot({
               <button
                 type="button"
                 onClick={open}
-                className="px-3 py-1.5 bg-white text-slate-800 text-xs font-semibold rounded-full shadow hover:bg-slate-50 cursor-pointer"
+                className="px-3 py-1.5 bg-white text-slate-800 text-xs font-semibold rounded-full shadow hover:bg-slate-50 clickable"
               >
                 Replace
               </button>
@@ -83,7 +83,7 @@ function ImageSlot({
         <button
           type="button"
           onClick={onRemove}
-          className="px-3 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-full shadow hover:bg-red-700 cursor-pointer"
+          className="px-3 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-full shadow hover:bg-red-700 clickable"
         >
           Remove
         </button>
