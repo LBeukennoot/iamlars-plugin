@@ -4,7 +4,7 @@ export default function Edit({ attributes, setAttributes }) {
   const { skill, rating } = attributes;
 
   const blockProps = useBlockProps({
-    className: 'flex items-center justify-between gap-4 w-full pb-2 max-w-sm!'
+    className: 'flex items-center justify-between gap-4 w-full pb-2 max-w-sm! ml-0!'
   });
 
   const handleRate = (value) => {
