@@ -7,6 +7,10 @@
   "category": "media",
   "icon": "format-image",
   "attributes": {
+    "aspectRatio": {
+      "type": "string",
+      "default": "aspect-video"
+    },
     "imageAId": {
       "type": "number"
     },

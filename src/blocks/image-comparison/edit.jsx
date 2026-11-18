@@ -5,7 +5,7 @@ import {
   InspectorControls,
   RichText
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
+import { PanelBody, TextControl, SelectControl } from '@wordpress/components';
 
 function ImageSlot({
   label,
@@ -99,18 +99,34 @@ export default function Edit({ attributes, setAttributes }) {
     imageATag,
     imageBUrl,
     imageBAlt,
-    imageBTag
+    imageBTag,
+    aspectRatio = 'aspect-video'
   } = attributes;
 
   const blockProps = useBlockProps({
-    className:
-      'relative flex w-full max-w-4xl aspect-video overflow-hidden rounded-3xl select-none font-sans'
+    className: `relative flex w-full max-w-4xl ${aspectRatio} overflow-hidden rounded-3xl select-none font-sans`
   });
 
   return (
     <>
       {/* Sidebar Controls */}
       <InspectorControls>
+        <PanelBody title="Layout" initialOpen={true}>
+          <SelectControl
+            label="Aspect Ratio"
+            value={aspectRatio}
+            options={[
+              { label: '16:9 (Landscape)', value: 'aspect-video' },
+              { label: '4:3 (Classic)', value: 'aspect-[4/3]' },
+              { label: '1:1 (Square)', value: 'aspect-square' },
+              { label: '5:6 (Portrait)', value: 'aspect-[5/6]' },
+              { label: '3:4 (Portrait)', value: 'aspect-[3/4]' },
+              { label: '9:16 (Vertical)', value: 'aspect-[9/16]' }
+            ]}
+            onChange={(value) => setAttributes({ aspectRatio: value })}
+          />
+        </PanelBody>
+
         <PanelBody title="Image Tags" initialOpen={true}>
           <TextControl
             label="Image 1 Tag (Left)"

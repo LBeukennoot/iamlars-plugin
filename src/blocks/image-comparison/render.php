@@ -10,6 +10,19 @@ $image_b_url = $attributes['imageBUrl'] ?? '';
 $image_b_alt = $attributes['imageBAlt'] ?? '';
 $image_b_tag = $attributes['imageBTag'] ?? '';
 
+$allowed_ratios = [
+  'aspect-video',
+  'aspect-[4/3]',
+  'aspect-square',
+  'aspect-[5/6]',
+  'aspect-[3/4]',
+  'aspect-[9/16]',
+];
+
+$aspect_ratio = in_array($attributes['aspectRatio'] ?? '', $allowed_ratios, true)
+  ? $attributes['aspectRatio']
+  : 'aspect-video';
+
 if (empty($image_a_url) && empty($image_b_url)) {
   return;
 }
@@ -18,17 +31,19 @@ if (empty($image_a_url) && empty($image_b_url)) {
 if (empty($image_a_url) || empty($image_b_url)) {
   $fallback_url = $image_a_url ?: $image_b_url;
   $fallback_alt = $image_a_url ? $image_a_alt : $image_b_alt;
-  $wrapper = get_block_wrapper_attributes(['class' => 'h-full max-w-4xl aspect-video overflow-hidden rounded-3xl select-none']);
+  $wrapper = get_block_wrapper_attributes([
+    'class' => "h-auto max-h-2xl max-w-4xl {$aspect_ratio} overflow-hidden rounded-3xl select-none",
+  ]);
 ?>
   <div <?php echo $wrapper; ?>>
-    <img src="<?php echo esc_url($fallback_url); ?>" alt="<?php echo esc_attr($fallback_alt); ?>" class="w-full h-auto object-cover block" />
+    <img src="<?php echo esc_url($fallback_url); ?>" alt="<?php echo esc_attr($fallback_alt); ?>" class="w-full h-full object-cover block" />
   </div>
 <?php
   return;
 }
 
 $wrapper = get_block_wrapper_attributes([
-  'class' => 'relative h-full max-w-4xl aspect-video overflow-hidden rounded-3xl select-none',
+  'class' => "relative h-auto max-h-2xl max-w-4xl {$aspect_ratio} overflow-hidden rounded-3xl select-none",
 ]);
 ?>
 
