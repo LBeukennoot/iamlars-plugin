@@ -21,6 +21,26 @@ jobs:
           node-version: 22 # Updated from 20 to satisfy Node >= 22.13.0
           cache: 'yarn'
 
+      - name: Set Release Version
+        run: |
+          # Strip leading 'v' from tag (e.g. v1.1.2 -> 1.1.2)
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "Detected release version: $VERSION"
+
+          # 1. Update version in package.json (without creating a git tag)
+          yarn version --new-version "$VERSION" --no-git-tag-version
+
+          # 2. Update Version header (and any VERSION constant) in iamlars-plugin.php
+          if [ -f iamlars-plugin.php ]; then
+            sed -i -E "s/^([[:space:]]*\*?[[:space:]]*Version:[[:space:]]*).*/\1$VERSION/" iamlars-plugin.php
+            sed -i -E "s/(define\(\s*['\"][A-Z0-9_]*VERSION['\"]\s*,\s*['\"])[^'\"]*(['\"])/\1$VERSION\2/" iamlars-plugin.php
+          fi
+
+          # 3. Update Stable tag in readme.txt if present
+          if [ -f readme.txt ]; then
+            sed -i -E "s/^(Stable tag:[[:space:]]*).*/\1$VERSION/" readme.txt
+          fi
+
       - name: Install dependencies & Compile Assets
         run: |
           yarn install --frozen-lockfile --ignore-engines
