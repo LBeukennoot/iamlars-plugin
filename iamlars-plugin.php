@@ -27,7 +27,7 @@ if (file_exists($puc_file)) {
     );
 
     // Set the stable branch
-    $myUpdateChecker->setBranch('main');
+    // $myUpdateChecker->setBranch('main');
 
     // 3. Type-hint to satisfy the IDE and guard against null VCS API
     /** @var \YahnisElsts\PluginUpdateChecker\v6\Vcs\GitHubApi|null $vcsApi */
