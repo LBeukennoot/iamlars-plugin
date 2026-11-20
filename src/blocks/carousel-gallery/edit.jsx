@@ -129,12 +129,12 @@ export default function Edit({ attributes, setAttributes }) {
                 {/* Inline Editable Tag aligned to bottom */}
                 <div className="absolute bottom-2 left-2 z-10 max-w-[calc(100%-1rem)]">
                   <RichText
-                    tagName="span"
+                    tagName="div"
                     value={image.tag || ''}
                     onChange={(val) => updateImageTag(index, val)}
                     placeholder="Add tag..."
                     allowedFormats={[]}
-                    className="pill-tag bg-white text-secondary shadow-md"
+                    className="pill-tag inline-block bg-white text-secondary shadow-md truncate whitespace-nowrap! max-w-full"
                   />
                 </div>
 

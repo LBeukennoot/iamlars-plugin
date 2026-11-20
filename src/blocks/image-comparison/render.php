@@ -10,18 +10,7 @@ $image_b_url = $attributes['imageBUrl'] ?? '';
 $image_b_alt = $attributes['imageBAlt'] ?? '';
 $image_b_tag = $attributes['imageBTag'] ?? '';
 
-$allowed_ratios = [
-  'aspect-video',
-  'aspect-[4/3]',
-  'aspect-square',
-  'aspect-[5/6]',
-  'aspect-[3/4]',
-  'aspect-[9/16]',
-];
-
-$aspect_ratio = in_array($attributes['aspectRatio'] ?? '', $allowed_ratios, true)
-  ? $attributes['aspectRatio']
-  : 'aspect-video';
+$aspect_ratio = $attributes['aspectRatio'];
 
 if (empty($image_a_url) && empty($image_b_url)) {
   return;
@@ -32,7 +21,7 @@ if (empty($image_a_url) || empty($image_b_url)) {
   $fallback_url = $image_a_url ?: $image_b_url;
   $fallback_alt = $image_a_url ? $image_a_alt : $image_b_alt;
   $wrapper = get_block_wrapper_attributes([
-    'class' => "h-auto max-h-2xl max-w-4xl {$aspect_ratio} overflow-hidden rounded-3xl select-none",
+    'class' => "h-full max-h-2xl min-w-4xl {$aspect_ratio} overflow-hidden rounded-3xl select-none",
   ]);
 ?>
   <div <?php echo $wrapper; ?>>
@@ -43,18 +32,23 @@ if (empty($image_a_url) || empty($image_b_url)) {
 }
 
 $wrapper = get_block_wrapper_attributes([
-  'class' => "relative h-auto max-h-2xl max-w-4xl {$aspect_ratio} overflow-hidden rounded-3xl select-none",
+  'class' => "relative w-full overflow-hidden rounded-3xl select-none font-sans",
+  'style' => 'aspect-ratio: ' . esc_attr($aspect_ratio) . ';'
 ]);
 ?>
 
-<div <?php echo $wrapper; ?>
+<!-- <div <?php echo $wrapper; ?> -->
+
+<div
+  class="relative w-full h-max rounded-3xl select-none"
+  style="aspect-ratio: <?php echo $aspect_ratio ?>"
   x-data="{ pos: 50 }">
   <img
     src="<?php echo esc_url($image_b_url); ?>"
     alt="<?php echo esc_attr($image_b_alt); ?>"
     class="absolute inset-0 w-full h-full object-cover pointer-events-none" />
   <?php if (!empty($image_b_tag)) : ?>
-    <span class="absolute bottom-3 right-3 z-0 pointer-events-none pill-tag bg-white text-secondary shadow-md">
+    <span class="absolute bottom-3 right-3 z-0 pointer-events-none pill-tag bg-white text-secondary shadow-md truncate max-w-70">
       <?php echo esc_html($image_b_tag); ?>
     </span>
   <?php endif; ?>
@@ -69,7 +63,7 @@ $wrapper = get_block_wrapper_attributes([
       class="absolute inset-0 w-full h-full object-cover" />
 
     <?php if (!empty($image_a_tag)) : ?>
-      <span class="absolute bottom-3 left-3 z-10 pointer-events-none pill-tag bg-white text-secondary shadow-md">
+      <span class="absolute bottom-3 left-3 z-10 pointer-events-none pill-tag bg-white text-secondary shadow-md truncate max-w-70">
         <?php echo esc_html($image_a_tag); ?>
       </span>
     <?php endif; ?>

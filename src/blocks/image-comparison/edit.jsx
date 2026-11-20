@@ -59,7 +59,7 @@ function ImageSlot({
           onChange={onChangeTag}
           placeholder="Add tag..."
           allowedFormats={[]}
-          className="pill-tag bg-white text-secondary shadow-md"
+          className="pill-tag inline-block bg-white text-secondary shadow-md truncate whitespace-nowrap! max-w-70"
         />
       </div>
 
@@ -100,11 +100,12 @@ export default function Edit({ attributes, setAttributes }) {
     imageBUrl,
     imageBAlt,
     imageBTag,
-    aspectRatio = 'aspect-video'
+    aspectRatio = '16/9'
   } = attributes;
 
   const blockProps = useBlockProps({
-    className: `relative flex w-full max-w-4xl ${aspectRatio} overflow-hidden rounded-3xl select-none font-sans`
+    className: `relative flex w-full h-full overflow-hidden rounded-3xl select-none font-sans`,
+    style: {aspectRatio}
   });
 
   return (
@@ -116,12 +117,12 @@ export default function Edit({ attributes, setAttributes }) {
             label="Aspect Ratio"
             value={aspectRatio}
             options={[
-              { label: '16:9 (Landscape)', value: 'aspect-video' },
-              { label: '4:3 (Classic)', value: 'aspect-[4/3]' },
-              { label: '1:1 (Square)', value: 'aspect-square' },
-              { label: '5:6 (Portrait)', value: 'aspect-[5/6]' },
-              { label: '3:4 (Portrait)', value: 'aspect-[3/4]' },
-              { label: '9:16 (Vertical)', value: 'aspect-[9/16]' }
+              { label: '16:9 (Landscape)', value: '16/9' },
+              { label: '4:3 (Classic)', value: '4/3' },
+              { label: '1:1 (Square)', value: '1/1' },
+              { label: '5:6 (Portrait)', value: '5/6' },
+              { label: '3:4 (Portrait)', value: '3/4' },
+              { label: '9:16 (Vertical)', value: '9/16' }
             ]}
             onChange={(value) => setAttributes({ aspectRatio: value })}
           />
