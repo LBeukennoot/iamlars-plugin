@@ -1,9 +1,8 @@
-import Alpine from 'alpinejs';
+import './js/alpineInit';
 import carouselGallery from './js/carouselGallery.js';
 import './style.css';
 
 // Reuse the theme's Alpine instance if it loaded first, otherwise attach this one
-window.Alpine = window.Alpine || Alpine;
 window.Alpine.data('carouselGallery', carouselGallery);
 window.carouselGallery = carouselGallery;
 
