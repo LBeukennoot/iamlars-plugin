@@ -114,3 +114,13 @@ add_action('wp_enqueue_scripts', function () {
         );
     }
 });
+
+add_filter('block_categories_all', function ($categories) {
+    array_unshift($categories, [
+        'slug'  => 'iamlars',
+        'title' => 'iamlars',
+        'icon'  => null, // Optional: Dashicon slug like 'star-filled'
+    ]);
+
+    return $categories;
+});

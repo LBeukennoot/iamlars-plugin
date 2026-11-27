@@ -4,7 +4,7 @@
   "name": "iamlars-plugin/image-comparison",
   "version": "1.0.0",
   "title": "Image Comparison",
-  "category": "media",
+  "category": "iamlars",
   "icon": "format-image",
   "attributes": {
     "aspectRatio": {

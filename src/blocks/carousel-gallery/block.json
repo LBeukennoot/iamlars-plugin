@@ -4,7 +4,7 @@
   "name": "iamlars/carousel-gallery",
   "version": "1.0.0",
   "title": "Carousel Gallery",
-  "category": "media",
+  "category": "iamlars",
   "icon": "images-alt2",
   "description": "An interactive carousel gallery with momentum and spring physics.",
   "supports": {

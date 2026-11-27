@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "iamlars/skill-rating",
   "title": "Skill Rating",
-  "category": "widgets",
+  "category": "iamlars",
   "icon": "star-filled",
   "description": "Display a single skill with a 1–5 proficiency score.",
   "supports": {
