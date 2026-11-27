@@ -2,8 +2,10 @@ import { registerBlockType } from '@wordpress/blocks';
 import metadata from './block.json';
 import Edit from './edit';
 
-registerBlockType(metadata.name, {
-  ...metadata,
-  edit: Edit,
-  save: () => null,
-});
+if (window.wp?.blocks) {
+  registerBlockType(metadata.name, {
+    ...metadata,
+    edit: Edit,
+    save: () => null
+  });
+}

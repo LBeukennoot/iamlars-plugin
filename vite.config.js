@@ -28,10 +28,10 @@ export default defineConfig({
           return '[name][extname]';
         },
         globals: {
-          '@wordpress/blocks': 'wp.blocks',
-          '@wordpress/block-editor': 'wp.blockEditor',
-          '@wordpress/element': 'wp.element',
-          '@wordpress/components': 'wp.components'
+          '@wordpress/blocks': '(window.wp && window.wp.blocks)',
+          '@wordpress/block-editor': '(window.wp && window.wp.blockEditor)',
+          '@wordpress/element': '(window.wp && window.wp.element)',
+          '@wordpress/components': '(window.wp && window.wp.components)'
         }
       },
       external: ['@wordpress/blocks', '@wordpress/block-editor', '@wordpress/element', '@wordpress/components']
