@@ -28,7 +28,7 @@ $wrapper = get_block_wrapper_attributes([
 
   <!-- Linear Horizontal Viewport -->
   <div
-    class="w-full overflow-hidden"
+    class="w-full"
     <?php if ($total_images > 1) : ?>
     :class="isDragging ? 'cursor-grabbing' : 'cursor-grab'"
     <?php endif; ?>>
@@ -37,7 +37,7 @@ $wrapper = get_block_wrapper_attributes([
       class="flex gap-3 will-change-transform items-center"
       :style="`transform: translate3d(${offset}px, 0px, 0px);`">
       <?php foreach ($images as $index => $image) : ?>
-        <div class="relative shrink-0 h-72 sm:h-80 md:h-96 w-full flex justify-center rounded-2xl overflow-hidden bg-transparent">
+        <div class="relative group shrink-0 h-72 sm:h-80 md:h-96 w-full flex justify-center rounded-2xl overflow-hidden bg-transparent">
           <img
             src="<?php echo esc_url($image['url'] ?? ''); ?>"
             alt="<?php echo esc_attr($image['alt'] ?? ''); ?>"
@@ -50,13 +50,14 @@ $wrapper = get_block_wrapper_attributes([
             </span>
           <?php endif; ?>
 
+          <!-- zoom button -->
           <?php if ($has_lightbox) : ?>
             <button
               type="button"
               @mousedown.stop
               @touchstart.stop
               aria-label="Expand image"
-              class="wp-block-image absolute bottom-3 right-3 z-10 p-2 rounded-full bg-white text-secondary shadow-md clickable">
+              class="wp-block-image absolute bottom-3 right-3 z-10 p-2 rounded-full bg-white text-secondary shadow-md clickable hidden group-hover:block">
               <img
                 src="<?php echo esc_url($image['url'] ?? ''); ?>"
                 alt="<?php echo esc_attr($image['tag'] ?? ''); ?>"
@@ -74,17 +75,54 @@ $wrapper = get_block_wrapper_attributes([
     </div>
   </div>
 
-  <!-- Navigation Dots Indicator -->
+  <!-- Navigation Dots & Prev/Next Controls -->
   <?php if ($total_images > 1) : ?>
-    <div class="flex items-center justify-center gap-2 mt-3 z-10">
-      <template x-for="(dot, i) in Array.from({ length: totalImages })" :key="i">
+    <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full mt-3 z-10">
+      <!-- Empty Left Spacer (keeps dots dead-center) -->
+      <div></div>
+
+      <!-- Centered Dots -->
+      <div class="flex items-center justify-center gap-2">
+        <template x-for="(dot, i) in Array.from({ length: totalImages })" :key="i">
+          <button
+            type="button"
+            @click="goTo(i)"
+            class="h-2 rounded-full transition-all duration-300"
+            :class="getActiveIndex() === i ? 'w-6 bg-secondary' : 'w-2 bg-primary hover:bg-secondary cursor-pointer'"
+            :aria-label="`Go to slide ${i + 1}`"></button>
+        </template>
+      </div>
+
+      <!-- Prev / Next Buttons Stuck to the Right -->
+      <div class="flex items-center justify-end gap-2">
         <button
           type="button"
-          @click="goTo(i)"
-          class="h-2 rounded-full transition-all duration-300"
-          :class="getActiveIndex() === i ? 'w-6 bg-secondary' : 'w-2 bg-primary hover:bg-secondary cursor-pointer'"
-          :aria-label="`Go to slide ${i + 1}`"></button>
-      </template>
+          @mousedown.stop
+          @touchstart.stop
+          @click="prev()"
+          :disabled="getActiveIndex() === 0"
+          :class="getActiveIndex() === 0 ? 'opacity-0' : 'clickable'"
+          aria-label="Previous slide"
+          class="p-2 rounded-full bg-primary text-white">
+          <svg class="w-4 h-4 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          @mousedown.stop
+          @touchstart.stop
+          @click="next()"
+          :disabled="getActiveIndex() === totalImages - 1"
+          :class="getActiveIndex() === totalImages - 1 ? 'opacity-0' : 'clickable'"
+          aria-label="Next slide"
+          class="p-2 rounded-full bg-primary text-white">
+          <svg class="w-4 h-4 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+      </div>
     </div>
   <?php endif; ?>
 </div>

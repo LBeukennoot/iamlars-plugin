@@ -2,8 +2,7 @@
 function carouselGallery(config = {}) {
   return {
     totalImages: config.totalImages || 0,
-    springForce: 0.12,
-    dampingFactor: 0.5,
+    ease: 0.18, // Smooth glide speed (0.1 = slower, 0.3 = snappier, no bounce)
 
     // Layout metrics (measured dynamically per card)
     snapOffsets: [],
@@ -12,12 +11,8 @@ function carouselGallery(config = {}) {
 
     // Position tracking (in pixels)
     offset: 0,
-    velocity: 0,
     isDragging: false,
-    startX: 0,
     lastX: 0,
-    lastTime: 0,
-    dragDistance: 0,
     animId: null,
 
     get minOffset() {
@@ -30,10 +25,6 @@ function carouselGallery(config = {}) {
       return this.maxBoundary;
     },
 
-    clamp(val, min, max) {
-      return Math.max(min, Math.min(max, val));
-    },
-
     init() {
       // 1. Initial measurement
       this.updateMeasurements();
@@ -44,10 +35,14 @@ function carouselGallery(config = {}) {
         const imgs = this.$refs.track ? this.$refs.track.querySelectorAll('img') : [];
         imgs.forEach((img) => {
           if (!img.complete) {
-            img.addEventListener('load', () => {
-              this.updateMeasurements();
-              this.goTo(this.getActiveIndex());
-            }, { once: true });
+            img.addEventListener(
+              'load',
+              () => {
+                this.updateMeasurements();
+                this.goTo(this.getActiveIndex());
+              },
+              { once: true }
+            );
           }
         });
       });
@@ -77,7 +72,7 @@ function carouselGallery(config = {}) {
       // Calculate the offset required to center each card
       this.snapOffsets = cards.map((card) => {
         const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-        return (viewportWidth / 2) - cardCenter;
+        return viewportWidth / 2 - cardCenter;
       });
 
       // First card centered is maxOffset; last card centered is minOffset
@@ -88,25 +83,15 @@ function carouselGallery(config = {}) {
     onDragStart(e) {
       if (this.totalImages <= 1) return;
       this.isDragging = true;
-      this.startX = e.clientX;
       this.lastX = e.clientX;
-      this.dragDistance = 0;
-      this.lastTime = performance.now();
-      this.velocity = 0;
       if (this.animId) cancelAnimationFrame(this.animId);
     },
 
     onDragMove(e) {
       if (!this.isDragging) return;
       const deltaX = e.clientX - this.lastX;
-      const now = performance.now();
-      const dt = Math.max(now - this.lastTime, 16);
 
-      // Light velocity tracker for flick gestures
-      this.velocity = (deltaX / dt) * 16;
-      this.dragDistance += Math.abs(deltaX);
-
-      // Rubber-band dampening when dragging beyond endpoints
+      // Light resistance past the first/last card
       if (this.offset > this.maxOffset || this.offset < this.minOffset) {
         this.offset += deltaX * 0.35;
       } else {
@@ -114,7 +99,6 @@ function carouselGallery(config = {}) {
       }
 
       this.lastX = e.clientX;
-      this.lastTime = now;
     },
 
     onTouchStart(e) {
@@ -130,34 +114,7 @@ function carouselGallery(config = {}) {
     onDragEnd() {
       if (!this.isDragging) return;
       this.isDragging = false;
-      this.settleToTarget();
-    },
-
-    settleToTarget() {
-      if (!this.snapOffsets || !this.snapOffsets.length) return;
-
-      let targetIndex = 0;
-      let closestDist = Infinity;
-
-      // Find the card whose snap position is closest to current offset
-      this.snapOffsets.forEach((snapPos, idx) => {
-        const dist = Math.abs(snapPos - this.offset);
-        if (dist < closestDist) {
-          closestDist = dist;
-          targetIndex = idx;
-        }
-      });
-
-      // If flicked with sufficient velocity, increment or decrement by 1 card
-      if (Math.abs(this.velocity) > 4) {
-        if (this.velocity < 0) {
-          targetIndex = Math.min(this.totalImages - 1, targetIndex + 1);
-        } else {
-          targetIndex = Math.max(0, targetIndex - 1);
-        }
-      }
-
-      this.goTo(targetIndex);
+      this.goTo(this.getActiveIndex());
     },
 
     goTo(index) {
@@ -166,26 +123,34 @@ function carouselGallery(config = {}) {
 
       if (this.animId) cancelAnimationFrame(this.animId);
 
-      const springLoop = () => {
+      const glideLoop = () => {
         if (this.isDragging) return;
 
         const distance = targetOffset - this.offset;
-        const spring = distance * this.springForce;
 
-        this.velocity += spring;
-        this.velocity *= this.dampingFactor;
-        this.offset += this.velocity;
-
-        // Settle when close enough to eliminate jitter
-        if (Math.abs(distance) > 0.5 || Math.abs(this.velocity) > 0.5) {
-          this.animId = requestAnimationFrame(springLoop);
+        if (Math.abs(distance) > 0.5) {
+          this.offset += distance * this.ease;
+          this.animId = requestAnimationFrame(glideLoop);
         } else {
           this.offset = targetOffset;
-          this.velocity = 0;
         }
       };
 
-      this.animId = requestAnimationFrame(springLoop);
+      this.animId = requestAnimationFrame(glideLoop);
+    },
+
+    prev() {
+      const current = this.getActiveIndex();
+      if (current > 0) {
+        this.goTo(current - 1);
+      }
+    },
+
+    next() {
+      const current = this.getActiveIndex();
+      if (current < this.totalImages - 1) {
+        this.goTo(current + 1);
+      }
     },
 
     getActiveIndex() {
