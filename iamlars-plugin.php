@@ -3,7 +3,7 @@
 /**
  * Plugin Name: iamlars
  * Description: Adding custom blocks for a personal portfolio website.
- * Version:     1.1.4
+ * Version:     1.1.5
  * Author URI:  https://iamlars.nl/
  * Author:      LBeukennoot
  * Text Domain: iamlars-plugin
@@ -61,7 +61,7 @@ add_action('init', function () {
         wp_register_script(
             'iamlars-blocks-script',
             $url . 'dist/blocks.js',
-            ['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'],
+            ['wp-blocks', 'wp-element', 'wp-block-editor'],
             filemtime($dir . 'dist/blocks.js'),
             true
         );

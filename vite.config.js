@@ -15,7 +15,6 @@ export default defineConfig({
     emptyOutDir: false,
     cssCodeSplit: false,
     rollupOptions: {
-      // Pass only the JS entry point
       input: path.resolve(__dirname, 'src/main.js'),
       output: {
         format: 'iife',

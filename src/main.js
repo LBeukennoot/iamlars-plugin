@@ -1,14 +1,13 @@
-// src/main.js
-import './style.css';
 import Alpine from 'alpinejs';
-import './js/carouselGallery.js';
+import carouselGallery from './js/carouselGallery.js';
+import './style.css';
 
+// Reuse the theme's Alpine instance if it loaded first, otherwise attach this one
 window.Alpine = window.Alpine || Alpine;
-
-// Register component
 window.Alpine.data('carouselGallery', carouselGallery);
 window.carouselGallery = carouselGallery;
 
+// Boot Alpine once on DOMContentLoaded (after both theme & plugin have registered their data)
 document.addEventListener('DOMContentLoaded', () => {
   if (!window.__alpineStarted) {
     window.__alpineStarted = true;
