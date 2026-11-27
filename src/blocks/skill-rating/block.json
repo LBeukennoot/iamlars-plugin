@@ -17,6 +17,14 @@
     "rating": {
       "type": "number",
       "default": 4
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "opensInNewTab": {
+      "type": "boolean",
+      "default": false
     }
   },
   "render": "file:./render.php"

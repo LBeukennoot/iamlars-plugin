@@ -61,7 +61,7 @@ add_action('init', function () {
         wp_register_script(
             'iamlars-blocks-script',
             $url . 'dist/blocks.js',
-            ['wp-blocks', 'wp-element', 'wp-block-editor'],
+            ['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'],
             filemtime($dir . 'dist/blocks.js'),
             true
         );
