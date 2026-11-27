@@ -38,12 +38,14 @@ $wrapper = get_block_wrapper_attributes([
       :style="`transform: translate3d(${offset}px, 0px, 0px);`">
       <?php foreach ($images as $index => $image) : ?>
         <div class="relative group shrink-0 h-72 sm:h-80 md:h-96 w-full flex justify-center rounded-2xl overflow-hidden bg-transparent">
+          <!-- image   -->
           <img
             src="<?php echo esc_url($image['url'] ?? ''); ?>"
             alt="<?php echo esc_attr($image['alt'] ?? ''); ?>"
             class="h-full w-auto max-w-none object-contain pointer-events-none rounded-2xl"
             loading="lazy" />
 
+          <!-- tag -->
           <?php if (!empty($image['tag'])) : ?>
             <span class="absolute bottom-3 left-3 z-10 pointer-events-none pill-tag bg-white text-secondary shadow-md! truncate max-w-100">
               <?php echo esc_html($image['tag']); ?>
@@ -57,7 +59,7 @@ $wrapper = get_block_wrapper_attributes([
               @mousedown.stop
               @touchstart.stop
               aria-label="Expand image"
-              class="wp-block-image absolute bottom-3 right-3 z-10 p-2 rounded-full bg-white text-secondary shadow-md clickable hidden group-hover:block">
+              class="wp-block-image absolute bottom-3 right-3 z-10 p-2 rounded-full bg-white text-secondary shadow-md clickable block sm:hidden! group-hover:block">
               <img
                 src="<?php echo esc_url($image['url'] ?? ''); ?>"
                 alt="<?php echo esc_attr($image['tag'] ?? ''); ?>"
