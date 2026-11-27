@@ -11,9 +11,6 @@ function ImageSlot({
   label,
   imageUrl,
   imageAlt,
-  tagText,
-  tagPosition = 'left',
-  onChangeTag,
   onSelect,
   onRemove
 }) {
@@ -47,24 +44,8 @@ function ImageSlot({
         className="w-full h-full object-cover pointer-events-none rounded-none!"
       />
 
-      {/* Inline Editable Tag Pill */}
-      <div
-        className={`absolute bottom-3 ${
-          tagPosition === 'left' ? 'left-3' : 'right-3'
-        } z-10`}
-      >
-        <RichText
-          tagName="span"
-          value={tagText}
-          onChange={onChangeTag}
-          placeholder="Add tag..."
-          allowedFormats={[]}
-          className="pill-tag inline-block bg-white text-secondary shadow-md truncate whitespace-nowrap! max-w-70"
-        />
-      </div>
-
       {/* Action overlay on hover */}
-      <div className="absolute inset-0 bg-slate-900/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-wrap items-center justify-center gap-2 p-2">
+      <div className="absolute inset-0 bg-slate-900/50 opacity-100 sm:opacity-0! group-hover:opacity-100! transition-opacity flex flex-wrap items-center justify-center gap-2 p-2">
         <MediaUploadCheck>
           <MediaUpload
             onSelect={onSelect}
@@ -104,8 +85,7 @@ export default function Edit({ attributes, setAttributes }) {
   } = attributes;
 
   const blockProps = useBlockProps({
-    className: `relative flex w-full h-full overflow-hidden rounded-3xl select-none font-sans`,
-    style: {aspectRatio}
+    className: 'flex flex-col gap-5 w-full select-none font-sans'
   });
 
   return (
@@ -130,82 +110,113 @@ export default function Edit({ attributes, setAttributes }) {
 
         <PanelBody title="Image Tags" initialOpen={true}>
           <TextControl
-            label="Image 1 Tag (Left)"
+            label="Left Image Tag"
             value={imageATag}
-            placeholder="e.g. Before"
+            placeholder="add tag..."
             onChange={(value) => setAttributes({ imageATag: value })}
           />
           <TextControl
-            label="Image 2 Tag (Right)"
+            label="Right Image Tag"
             value={imageBTag}
-            placeholder="e.g. After"
+            placeholder="add tag..."
             onChange={(value) => setAttributes({ imageBTag: value })}
           />
         </PanelBody>
       </InspectorControls>
 
       <div {...blockProps}>
-        {/* Left Slot (Image 1) */}
-        <div className="w-1/2 h-full relative overflow-hidden">
-          <ImageSlot
-            label="Image 1"
-            imageUrl={imageAUrl}
-            imageAlt={imageAAlt}
-            tagText={imageATag}
-            tagPosition="left"
-            onChangeTag={(value) => setAttributes({ imageATag: value })}
-            onSelect={(media) =>
-              setAttributes({
-                imageAId: media.id,
-                imageAUrl: media.url,
-                imageAAlt: media.alt || ''
-              })
-            }
-            onRemove={() =>
-              setAttributes({
-                imageAId: null,
-                imageAUrl: '',
-                imageAAlt: '',
-                imageATag: ''
-              })
-            }
-          />
-        </div>
-
-        {/* Right Slot (Image 2) */}
-        <div className="w-1/2 h-full relative overflow-hidden">
-          <ImageSlot
-            label="Image 2"
-            imageUrl={imageBUrl}
-            imageAlt={imageBAlt}
-            tagText={imageBTag}
-            tagPosition="right"
-            onChangeTag={(value) => setAttributes({ imageBTag: value })}
-            onSelect={(media) =>
-              setAttributes({
-                imageBId: media.id,
-                imageBUrl: media.url,
-                imageBAlt: media.alt || ''
-              })
-            }
-            onRemove={() =>
-              setAttributes({
-                imageBId: null,
-                imageBUrl: '',
-                imageBAlt: '',
-                imageBTag: ''
-              })
-            }
-          />
-        </div>
-
-        {/* Center Divider & Handle */}
+        {/* Comparison Image Box */}
         <div
-          className="absolute top-0 bottom-0 w-1 bg-primary pointer-events-none flex items-center justify-center -translate-x-1/2 z-20"
-          style={{ left: '50%' }}
+          className="relative flex w-full overflow-hidden rounded-3xl"
+          style={{ aspectRatio }}
         >
-          <div className="absolute w-8 h-8 bg-white rounded-full border-4 border-primary shadow-sm" />
+          {/* Left Slot (Image 1) */}
+          <div className="w-1/2 h-full relative overflow-hidden">
+            <ImageSlot
+              label="Image 1"
+              imageUrl={imageAUrl}
+              imageAlt={imageAAlt}
+              onSelect={(media) =>
+                setAttributes({
+                  imageAId: media.id,
+                  imageAUrl: media.url,
+                  imageAAlt: media.alt || ''
+                })
+              }
+              onRemove={() =>
+                setAttributes({
+                  imageAId: null,
+                  imageAUrl: '',
+                  imageAAlt: '',
+                  imageATag: ''
+                })
+              }
+            />
+          </div>
+
+          {/* Right Slot (Image 2) */}
+          <div className="w-1/2 h-full relative overflow-hidden">
+            <ImageSlot
+              label="Image 2"
+              imageUrl={imageBUrl}
+              imageAlt={imageBAlt}
+              onSelect={(media) =>
+                setAttributes({
+                  imageBId: media.id,
+                  imageBUrl: media.url,
+                  imageBAlt: media.alt || ''
+                })
+              }
+              onRemove={() =>
+                setAttributes({
+                  imageBId: null,
+                  imageBUrl: '',
+                  imageBAlt: '',
+                  imageBTag: ''
+                })
+              }
+            />
+          </div>
+
+          {/* Center Divider & Handle */}
+          <div
+            className="absolute top-0 bottom-0 w-1 bg-primary pointer-events-none flex items-center justify-center -translate-x-1/2 z-20"
+            style={{ left: '50%' }}
+          >
+            <div className="absolute w-8 h-8 bg-white rounded-full border-4 border-primary shadow-sm" />
+          </div>
         </div>
+
+        {/* Tag Pills Underneath */}
+        {(imageAUrl || imageBUrl || imageATag || imageBTag) && (
+          <div className="flex justify-between gap-2">
+            <div className="min-w-0 max-w-[calc(50%-0.25rem)]">
+              {(imageAUrl || imageATag) && (
+                <RichText
+                  tagName="span"
+                  value={imageATag}
+                  onChange={(value) => setAttributes({ imageATag: value })}
+                  placeholder="add tag..."
+                  allowedFormats={[]}
+                  className="pill-tag inline-block bg-white text-secondary shadow-md truncate whitespace-nowrap! max-w-full"
+                />
+              )}
+            </div>
+
+            <div className="min-w-0 max-w-[calc(50%-0.25rem)]">
+              {(imageBUrl || imageBTag) && (
+                <RichText
+                  tagName="span"
+                  value={imageBTag}
+                  onChange={(value) => setAttributes({ imageBTag: value })}
+                  placeholder="add tag..."
+                  allowedFormats={[]}
+                  className="pill-tag inline-block bg-white text-secondary shadow-md truncate whitespace-nowrap! max-w-full"
+                />
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
