@@ -37,8 +37,8 @@ $wrapper = get_block_wrapper_attributes([
       class="flex gap-3 will-change-transform items-center"
       :style="`transform: translate3d(${offset}px, 0px, 0px);`">
       <?php foreach ($images as $index => $image) : ?>
-        <div class="relative group shrink-0 h-72 sm:h-80 md:h-96 w-full flex justify-center rounded-2xl overflow-hidden bg-transparent">
-          <!-- image   -->
+        <div class="relative group/gallery shrink-0 h-72 sm:h-80 md:h-96 w-auto rounded-2xl overflow-hidden bg-transparent">
+          <!-- image -->
           <img
             src="<?php echo esc_url($image['url'] ?? ''); ?>"
             alt="<?php echo esc_attr($image['alt'] ?? ''); ?>"
@@ -59,7 +59,7 @@ $wrapper = get_block_wrapper_attributes([
               @mousedown.stop
               @touchstart.stop
               aria-label="Expand image"
-              class="wp-block-image absolute bottom-3 right-3 z-10 p-2 rounded-full bg-white text-secondary shadow-md clickable block sm:hidden! group-hover:block">
+              class="wp-block-image absolute bottom-3 right-3 z-10 p-2 rounded-full bg-white text-secondary shadow-md clickable md:hidden! md:group-hover/gallery:flex!">
               <img
                 src="<?php echo esc_url($image['url'] ?? ''); ?>"
                 alt="<?php echo esc_attr($image['tag'] ?? ''); ?>"
@@ -89,8 +89,8 @@ $wrapper = get_block_wrapper_attributes([
           <button
             type="button"
             @click="goTo(i)"
-            class="h-2 rounded-full transition-all duration-300"
-            :class="getActiveIndex() === i ? 'w-6 bg-secondary' : 'w-2 bg-primary hover:bg-secondary cursor-pointer'"
+            class="h-2 rounded-full"
+            :class="getActiveIndex() === i ? 'w-4 bg-secondary' : 'w-2 bg-primary hover:bg-secondary cursor-pointer'"
             :aria-label="`Go to slide ${i + 1}`"></button>
         </template>
       </div>

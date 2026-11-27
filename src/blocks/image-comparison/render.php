@@ -80,12 +80,12 @@ $wrapper = get_block_wrapper_attributes([
 
   <div class="flex justify-between gap-2">
     <?php if (!empty($image_a_tag)) : ?>
-      <span class="z-10 pointer-events-none pill-tag bg-white text-secondary shadow-md truncate max-w-70">
+      <span class="z-10 pointer-events-none pill-tag bg-primary text-white truncate max-w-70">
         <?php echo esc_html($image_a_tag); ?>
       </span>
     <?php endif; ?>
     <?php if (!empty($image_b_tag)) : ?>
-      <span class="z-0 pointer-events-none pill-tag bg-white text-secondary shadow-md truncate max-w-70">
+      <span class="z-0 pointer-events-none pill-tag bg-primary text-white truncate max-w-70">
         <?php echo esc_html($image_b_tag); ?>
       </span>
     <?php endif; ?>

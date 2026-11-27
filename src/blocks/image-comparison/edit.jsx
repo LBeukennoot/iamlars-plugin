@@ -198,7 +198,7 @@ export default function Edit({ attributes, setAttributes }) {
                   onChange={(value) => setAttributes({ imageATag: value })}
                   placeholder="add tag..."
                   allowedFormats={[]}
-                  className="pill-tag inline-block bg-white text-secondary shadow-md truncate whitespace-nowrap! max-w-full"
+                  className="pill-tag inline-block bg-primary text-white truncate whitespace-nowrap! max-w-full"
                 />
               )}
             </div>
@@ -211,7 +211,7 @@ export default function Edit({ attributes, setAttributes }) {
                   onChange={(value) => setAttributes({ imageBTag: value })}
                   placeholder="add tag..."
                   allowedFormats={[]}
-                  className="pill-tag inline-block bg-white text-secondary shadow-md truncate whitespace-nowrap! max-w-full"
+                  className="pill-tag inline-block bg-primary text-white truncate whitespace-nowrap! max-w-full"
                 />
               )}
             </div>
